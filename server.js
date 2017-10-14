@@ -4,6 +4,8 @@ const appRoute = require('./app/routes/app');
 const path = require('path');
 const socket = require('./app/models/socket-io/socket-io');
 
+require('dotenv').config();
+
 /* Defines the application */
 let app = express();
 

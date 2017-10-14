@@ -1,4 +1,9 @@
+<<<<<<< 0f7db4e60e8a554aa2e6701f9189a9d055e24d15
 let mongooseRoom = require('../mongoose/rooms');
+=======
+let mongooseArduino = require('../mongoose/arduino');
+let randomSHA = require('../vendor/random');
+>>>>>>> Add mongo env variables
 const _ = require('underscore');
 
 exports.start = (server) => {
@@ -21,6 +26,35 @@ exports.start = (server) => {
             console.log("New listener joined");
             socket.emit('joinSuccess');
         });
+
+        socket.on('getSHA', () => {
+            /* TODO: Implement */
+            let sha1 = randomSHA.makeID();
+            socket.emit('newSHA', {
+                SHA1: sha1,
+            });
+        });
+
+        socket.on('sendID', (data) => {
+
+            let ID = data.ID;
+
+            console.log('Received ID ' + ID);
+
+            let savePromise = mongooseArduino.saveArduino(
+                mongooseArduino.createNewArduino(ID)
+            );
+            savePromise
+                .then(function(success) {
+                    console.log('Saved with success.');
+                    socket.emit('IDReceived');
+                })
+                .catch(function(err) {
+                    console.log('Error occurred while saving to the database. Item already present or key violations');
+                });
+
+        });
+
         /* Triggered by joining a new room */
         socket.on('keyMiss', (flightData) => {
             /* TODO: Do something with flight data */

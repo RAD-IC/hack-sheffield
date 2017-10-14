@@ -2,7 +2,7 @@
 
 const express = require('express');
 const router = new express.Router();
-const mongooseRoom = require('../models/mongoose/rooms');
+const mongooseRoom = require('../models/mongoose/arduino');
 
 /* Post handler for /googlemaps */
 router.post('/googlemaps', function(req, res) {

@@ -4,5 +4,5 @@ sheffield
 #Ignore node modules
 /**/**/node_modules
 
-#Ignore env variables
+#Environment files
 /**/**/.env
