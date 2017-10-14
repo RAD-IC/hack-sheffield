@@ -11,5 +11,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <sys/ioctl.h>
+#include <time.h>
+#include <sys/time.h>
 
 #endif // INCLUDE_H

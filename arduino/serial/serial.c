@@ -1,5 +1,8 @@
 #include "serial.h"
 
+#define C_ID 200
+#define ARDUINO_ID 201
+
 /* ---------------------------- SERIAL PORT --------------------------------- */
 
 /* Serial port file descriptor used for handling */
@@ -95,7 +98,7 @@ void setupSerial(const char* portname) {
   /* If serial has been opened correctly proceed to set Baudrate and blocking */
   if (isSerialReady) {
     /* BaudRate is set to 115200 bps with no parity check */
-  	set_interface_attribs (serialFd, B115200, 0);
+  	set_interface_attribs (serialFd, B9600, 0);
 
     /* Serial communication will be non blocking */
   	set_blocking (serialFd, 0);
@@ -113,7 +116,7 @@ void sendByteData(uint8_t* data, double timeData) {
     /* An extra byte is sent prior to the 5 data bytes.
        The value 200 is sent to authenticate the data as sent from the PC. */
   	uint8_t bytes_to_send[1];
-  	bytes_to_send[0] = 200;
+  	bytes_to_send[0] = C_ID;
 
     /* The authentication byte is written over the serial port */
     write (serialFd, bytes_to_send, 1);
@@ -147,10 +150,12 @@ uint8_t* readByteData(int num) {
       read (serialFd, auth, sizeof auth);
 
       /* We only accept data sent by Arduino with auth code 201 */
-      if (auth[0] == 201) {
+      if (auth[0] == ARDUINO_ID) {
         /* Allocates a new buffer to store the data to be read */
         uint8_t* buf = (uint8_t*) malloc(sizeof (uint8_t) * num);
         read (serialFd, buf, sizeof buf);  // read up to 100 characters if ready to read
+
+		printf("Read %i Bytes\n", num);
 
         /* Serial Read data is printed to stout */
         for (int i = 0; i < num; i++) {
