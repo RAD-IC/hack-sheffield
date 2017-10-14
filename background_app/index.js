@@ -78,7 +78,7 @@ socket.on('newSHA', (data) => {
     SHA1 = data.SHA1;
     console.log('SHA1 received ' + SHA1);
 
-    socket.emit('joinDevice', {'ID': 112233});
+    socket.emit('joinDevice', {'ID': 1332221});
 });
 
 /* Call the following to attempt to sync with the arduino device */
