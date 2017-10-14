@@ -51,11 +51,17 @@
     <br>
     <button class="btn" style="margin: 0 auto; display: block" ng-click="sendPin()">Link the device!</button>
   </div>
-  <div ng-show="sentData" style="position: relative">
+  <div ng-show="sentData && !validData" style="position: relative">
     <div class="spinner">
         <div class="double-bounce1"></div>
         <div class="double-bounce2"></div>
     </div>
     <h2 style="text-align:center">Please wait. We're connecting to your device.</h2>
+  </div>
+
+  <div ng-show="sentData && validData">
+    <br>
+    <h2 style="text-align:center">Success! Your device is now connected.</h2>
+    <i class="fa fa-check-circle" aria-hidden="true" style="font-size:300px;color:green;width:100%;text-align:center"></i>
   </div>
 </div>
