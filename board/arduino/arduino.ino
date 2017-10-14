@@ -9,8 +9,13 @@
 /* General global value definitions */
 #define ARDUINO_ID 201
 #define C_ID 200
-#define BUFFER_DATA_LENGTH 5
+#define BUFFER_DATA_LENGTH 3
 #define BAUDRATE 9600
+#define LED_PIN 2
+#define LIGHT_SENSOR_PIN A0
+#define TOUCH_SENSOR_PIN 3
+#define BUZZER_PIN 4
+#define PIEZO_PIN A1
 
 long updateTime = 0;
 
@@ -19,6 +24,10 @@ void setup() {
   /* Begin communication over Serial Port with a baud
      rate of 9600*/
   Serial.begin(BAUDRATE);
+  pinMode(LED_PIN, OUTPUT);
+  digitalWrite(LED_PIN, HIGH);
+  pinMode(TOUCH_SENSOR_PIN, INPUT);
+  pinMode(BUZZER_PIN, OUTPUT);
 }
 
 /* Main Arduino loop */
@@ -36,6 +45,7 @@ void loop() {
   if (!(curMillis - updateTime >= updateMilliThreshold)) {
     /* Prevent writing to serial to avoid serial port data overflow */
     writeToSerial = false;
+    
   }
 
   /* Wait for 6 bytes of data to have been sent over serial */
@@ -48,11 +58,14 @@ void loop() {
       /* Read the servoAngles */
       Serial.read();
 
-      for (int i = 0; i < BUFFER_DATA_LENGTH; i++) {
-        uint8_t data = (uint8_t) Serial.read();
-
-        // TODO: Do something with data
+      uint8_t data = (uint8_t) Serial.read();
+      if(data == 1) {
+        digitalWrite(BUZZER_PIN, HIGH);
+      } else {
+        digitalWrite(BUZZER_PIN, LOW);
       }
+      Serial.read();
+        
 
       /* Force a reply */
       writeToSerial = true;      
@@ -63,13 +76,13 @@ void loop() {
 
   /* When it is possible to reply to serial */
   if (writeToSerial) {
+    updateTime = curMillis;
     /* Identification byte */
     Serial.write(ARDUINO_ID);
 
-    for (int i = 0; i < BUFFER_DATA_LENGTH; i++) {
-        Serial.write((uint8_t) 0);
-
-        // TODO: Instead of writing zero, write something else
-      }
+    Serial.write(analogRead(LIGHT_SENSOR_PIN) < 800 );
+    Serial.write(digitalRead(TOUCH_SENSOR_PIN));
+    Serial.write(analogRead(PIEZO_PIN) > 600);
+    
   }
 }
