@@ -16,7 +16,7 @@ const io = require('socket.io-client');
 
 //const socket = require('socket.io-client')('http://52.90.210.61:3002');
 
-const remoteServer = 'spina.me:3002';
+const remoteServer = 'http://localhost:3002';
 const socket = io.connect(remoteServer);
 
 // const socket = require('socket.io-client')(serverAddr);
@@ -40,6 +40,19 @@ socket.on('IDSave', (data) => {
 
     console.log('Save Status for ID ' + ID + ' ' + status);
 });
+
+const request = require('request');
+
+request.post(
+    'http://localhost:3002/riku',
+    { json: { key: 'value' } },
+    function (error, response, body) {
+        console.log(error);
+        if (!error && response.statusCode == 200) {
+            console.log(body)
+        }
+    }
+);
 
 
 module.exports = app;
