@@ -1,8 +1,7 @@
 const express = require('express');
 const path = require('path');
 
-const serverAddr = 'http://localhost:3002';
-const socket = require('socket.io-client')(serverAddr);
+//const serverAddr = 'https://sheffield.spina.me:3002';
 
 /* Defines the application */
 let app = express();
@@ -11,6 +10,16 @@ app.set('port', 3004);
 let server = app.listen(app.get('port'), () => {
     console.log('[Server] : open on port ' + app.get('port'));
 });
+
+const io = require('socket.io-client');
+//const socket = io.connect('http://sheffield.spina.me:3002', {reconnect: true});
+
+//const socket = require('socket.io-client')('http://52.90.210.61:3002');
+
+const remoteServer = 'spina.me:3002';
+const socket = io.connect(remoteServer);
+
+// const socket = require('socket.io-client')(serverAddr);
 
 let ID = 1332;
 
