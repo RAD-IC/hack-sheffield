@@ -1,5 +1,5 @@
 PROG = sheffield
-CFLAGS = -Wall -Werror -pedantic -std=gnu99
+CFLAGS = -Wall -Werror -pedantic -std=gnu99 -lcurl
 CSOURCES = $(shell find -name '*.c')
 
 .PHONY : all clean

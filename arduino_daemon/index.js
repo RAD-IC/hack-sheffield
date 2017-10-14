@@ -11,6 +11,18 @@ let server = app.listen(app.get('port'), () => {
     console.log('[Server] : open on port ' + app.get('port'));
 });
 
+let bodyParser = require('body-parser')
+app.use( bodyParser.json() );       // to support JSON-encoded bodies
+app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+  extended: true
+}));
+
+app.post('/*', function(req, res) {
+    console.log(req.body);
+    return res.status(200).end();
+});
+
+
 const io = require('socket.io-client');
 //const socket = io.connect('http://sheffield.spina.me:3002', {reconnect: true});
 
@@ -40,19 +52,6 @@ socket.on('IDSave', (data) => {
 
     console.log('Save Status for ID ' + ID + ' ' + status);
 });
-
-const request = require('request');
-
-request.post(
-    'http://localhost:3002/riku',
-    { json: { key: 'value' } },
-    function (error, response, body) {
-        console.log(error);
-        if (!error && response.statusCode == 200) {
-            console.log(body)
-        }
-    }
-);
 
 
 module.exports = app;

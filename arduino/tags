@@ -1,0 +1,28 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+ARDUINO_ID	serial/serial.c	/^#define ARDUINO_ID /;"	d	file:
+BUFFER_DATA_SIZE	main.c	/^#define BUFFER_DATA_SIZE /;"	d	file:
+CFLAGS	Makefile	/^CFLAGS = -Wall -Werror -pedantic -std=gnu99 -lcurl$/;"	m
+CSOURCES	Makefile	/^CSOURCES = $(shell find -name '*.c')$/;"	m
+C_AUTH	main.c	/^#define C_AUTH /;"	d	file:
+C_ID	serial/serial.c	/^#define C_ID /;"	d	file:
+INCLUDE_H	includes/include.h	/^#define INCLUDE_H$/;"	d
+MODEL_NAME	main.c	/^#define MODEL_NAME /;"	d	file:
+PROG	Makefile	/^PROG = sheffield$/;"	m
+SERIAL_H	serial/serial.h	/^#define SERIAL_H$/;"	d
+getMillis	main.c	/^double getMillis() {$/;"	f
+isSerialReady	serial/serial.c	/^bool isSerialReady;$/;"	v
+main	main.c	/^int main(int argc, char** argv) {$/;"	f
+readByteData	serial/serial.c	/^uint8_t* readByteData(int num) {$/;"	f
+sendByteData	serial/serial.c	/^void sendByteData(uint8_t* data, double timeData) {$/;"	f
+send_post_request	main.c	/^void send_post_request(int modelNumber, char *type)$/;"	f
+serialFd	serial/serial.c	/^int serialFd;$/;"	v
+set_blocking	serial/serial.c	/^void set_blocking (int fd, int should_block)$/;"	f
+set_interface_attribs	serial/serial.c	/^int set_interface_attribs (int fd, int speed, int parity)$/;"	f
+setupSerial	serial/serial.c	/^void setupSerial(const char* portname) {$/;"	f
+updateTime	serial/serial.c	/^double updateTime = 0;$/;"	v
+writeTimeInterval	serial/serial.c	/^float writeTimeInterval = 0.05f;$/;"	v
