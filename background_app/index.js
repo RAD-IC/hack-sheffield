@@ -27,16 +27,6 @@ let getRandomVideo = () => {
 
 let {message, url} = getRandomVideo();
 
-notifier.notify({
-    title: 'Someone is knocking on your door!',
-    message: message,
-    sound: true, // Only Notification Center or Windows Toasters
-    wait: true, // Wait with callback, until user action is taken against notification
-    open: url,
-}, function (err, response) {
-    // Response is response from notification
-});
-
 notifier.on('click', function (notifierObject, options) {
     // Triggers if `wait: true` and user clicks notification
 });
@@ -78,7 +68,7 @@ socket.on('newSHA', (data) => {
     SHA1 = data.SHA1;
     console.log('SHA1 received ' + SHA1);
 
-    socket.emit('joinDevice', {'ID': 1332221});
+    socket.emit('joinDevice', {'ID': 12345});
 });
 
 /* Call the following to attempt to sync with the arduino device */
@@ -103,6 +93,16 @@ socket.on('arduinoPress', () => {
 
     if (scanStatus) {
         console.log('Device successfully connected');
+
+        notifier.notify({
+            title: 'Someone is knocking on your door!',
+            message: message,
+            sound: true, // Only Notification Center or Windows Toasters
+            wait: true, // Wait with callback, until user action is taken against notification
+            open: url,
+        }, function (err, response) {
+            // Response is response from notification
+        });
     }
 });
 

@@ -19,6 +19,9 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 
 app.post('/*', function(req, res) {
     console.log(req.body);
+
+    /* Broadcast to the room */
+    socket.emit('broadcastPress');
     return res.status(200).end();
 });
 
@@ -29,7 +32,7 @@ const socket = io.connect(remoteServer);
 
 // const socket = require('socket.io-client')(serverAddr);
 
-let ID = 1332221;
+let ID = 12345;
 
 socket.on('connect', () => {
     console.log('connected!');
