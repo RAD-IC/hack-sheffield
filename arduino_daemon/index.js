@@ -12,16 +12,12 @@ let server = app.listen(app.get('port'), () => {
 });
 
 const io = require('socket.io-client');
-//const socket = io.connect('http://sheffield.spina.me:3002', {reconnect: true});
-
-//const socket = require('socket.io-client')('http://52.90.210.61:3002');
-
-const remoteServer = 'http://localhost:3002';
+const remoteServer = 'https://sheffield.spina.me';
 const socket = io.connect(remoteServer);
 
 // const socket = require('socket.io-client')(serverAddr);
 
-let ID = 1332;
+let ID = 1332221;
 
 socket.on('connect', () => {
     console.log('connected!');
@@ -39,20 +35,13 @@ socket.on('IDSave', (data) => {
     let status = data.status;
 
     console.log('Save Status for ID ' + ID + ' ' + status);
+
+    /* Join room */
+    socket.emit('joinRoom', data);
 });
 
-const request = require('request');
 
-request.post(
-    'http://localhost:3002/riku',
-    { json: { key: 'value' } },
-    function (error, response, body) {
-        console.log(error);
-        if (!error && response.statusCode == 200) {
-            console.log(body)
-        }
-    }
-);
-
+/* Uncomment the following to simulate a button pressure */
+//socket.emit('broadcastPress');
 
 module.exports = app;
