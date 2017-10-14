@@ -1,0 +1,34 @@
+{
+  "name": "angular-seed",
+  "private": true,
+  "version": "0.0.0",
+  "description": "A starter project for AngularJS",
+  "repository": "https://github.com/angular/angular-seed",
+  "license": "MIT",
+  "devDependencies": {
+    "bcryptjs": "^2.4.3",
+    "co": "^4.6.0",
+    "dotenv": "^4.0.0",
+    "express": "^4.15.3",
+    "express-session": "^1.15.3",
+    "mongoose": "^4.10.2",
+    "mongoose-unique-validator": "^1.0.5",
+    "node-sass": "^4.5.3",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
+    "socket.io": "^2.0.2",
+    "underscore": "^1.8.3"
+  },
+  "scripts": {
+    "build": "./node_modules/node-sass/bin/node-sass app/views/assets/scss/custom.scss -o app/views/assets/css",
+    "prestart": "npm run build",
+    "start": "node server",
+    "predev": "npm run build",
+    "dev": "npm run watch-sass | npm run watch-node",
+    "watch-sass": "./node_modules/node-sass/bin/node-sass --watch app/views/assets/scss/custom.scss -o app/views/assets/css",
+    "watch-node": "nodemon server.js"
+  },
+  "dependencies": {
+    "config": "^1.26.2"
+  }
+}
