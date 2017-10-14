@@ -9,10 +9,8 @@
 /* General global value definitions */
 #define ARDUINO_ID 201
 #define C_ID 200
-#define BUFFER_DATA_LENGTH 1
+#define BUFFER_DATA_LENGTH 5
 #define BAUDRATE 9600
-#define LED 2
-#define LIGHT_SENSOR A0
 
 long updateTime = 0;
 
@@ -21,8 +19,6 @@ void setup() {
   /* Begin communication over Serial Port with a baud
      rate of 9600*/
   Serial.begin(BAUDRATE);
-  pinMode(LED, OUTPUT);
-  digitalWrite(LED, HIGH);
 }
 
 /* Main Arduino loop */
@@ -40,7 +36,6 @@ void loop() {
   if (!(curMillis - updateTime >= updateMilliThreshold)) {
     /* Prevent writing to serial to avoid serial port data overflow */
     writeToSerial = false;
-    
   }
 
   /* Wait for 6 bytes of data to have been sent over serial */
@@ -68,12 +63,13 @@ void loop() {
 
   /* When it is possible to reply to serial */
   if (writeToSerial) {
-    updateTime = curMillis;
     /* Identification byte */
     Serial.write(ARDUINO_ID);
 
-    //Serial.println(analogRead(LIGHT_SENSOR) > 800);
-    Serial.write(analogRead(LIGHT_SENSOR) > 800 );
-    
+    for (int i = 0; i < BUFFER_DATA_LENGTH; i++) {
+        Serial.write((uint8_t) 0);
+
+        // TODO: Instead of writing zero, write something else
+      }
   }
 }
