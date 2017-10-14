@@ -27,4 +27,10 @@ router.get('/:roomID/users', function(req, res) {
     /* DEPRECATED */
 });
 
+router.post('/riku', function(req, res) {
+    console.log('RIKU WINS ABOVE ALL');
+
+    /* DEPRECATED */
+});
+
 module.exports = router;
