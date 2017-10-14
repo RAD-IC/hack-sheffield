@@ -40,8 +40,12 @@ socket.on('IDSave', (data) => {
     socket.emit('joinRoom', data);
 });
 
+socket.on('joinRoomSuccess', () => {
+    socket.emit('broadcastPress');
+});
 
-/* Uncomment the following to simulate a button pressure */
-//socket.emit('broadcastPress');
+
+/* Use the following to simulate a button pressure */
+// socket.emit('broadcastPress');
 
 module.exports = app;
