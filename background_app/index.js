@@ -55,9 +55,26 @@ let server = app.listen(app.get('port'), () => {
     console.log('[Server] : open on port ' + app.get('port'));
 });
 
+let SHA1;
+
 /* */
 socket.on('connect', () => {
     console.log('connected!');
+
+    socket.emit('join');
+});
+
+/* */
+socket.on('joinSuccess', () => {
+    console.log('join ACKed!');
+
+    socket.emit('getSHA');
+});
+
+/* */
+socket.on('newSHA', (data) => {
+    SHA1 = data.SHA1;
+    console.log('SHA1 received ' + SHA1);
 });
 
 /* */
