@@ -55,7 +55,15 @@ let server = app.listen(app.get('port'), () => {
     console.log('[Server] : open on port ' + app.get('port'));
 });
 
+/* */
 socket.on('connect', () => {
     console.log('connected!');
 });
+
+/* */
+socket.on('pingNotification', () => {
+    console.log('Ping received');
+});
+
+
 module.exports = app;
