@@ -8,6 +8,8 @@
   },
   "author": "",
   "dependencies": {
-    "node-notifier": "^5.1.2"
+    "express": "^4.16.2",
+    "node-notifier": "^5.1.2",
+    "socket.io-client": "^2.0.3"
   }
 }
