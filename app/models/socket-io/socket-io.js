@@ -1,9 +1,5 @@
-<<<<<<< 0f7db4e60e8a554aa2e6701f9189a9d055e24d15
-let mongooseRoom = require('../mongoose/rooms');
-=======
 let mongooseArduino = require('../mongoose/arduino');
 let randomSHA = require('../vendor/random');
->>>>>>> Add mongo env variables
 const _ = require('underscore');
 
 exports.start = (server) => {
@@ -47,10 +43,11 @@ exports.start = (server) => {
             savePromise
                 .then(function(success) {
                     console.log('Saved with success.');
-                    socket.emit('IDReceived');
+                    socket.emit('IDSave', {'status':'success'});
                 })
                 .catch(function(err) {
                     console.log('Error occurred while saving to the database. Item already present or key violations');
+                    socket.emit('IDSave', {'status':'failure'});
                 });
 
         });
