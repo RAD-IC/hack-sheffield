@@ -41,7 +41,7 @@ socket.on('IDSave', (data) => {
 });
 
 socket.on('joinRoomSuccess', () => {
-    socket.emit('broadcastPress');
+
 });
 
 
