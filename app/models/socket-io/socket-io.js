@@ -82,7 +82,8 @@ exports.start = (server) => {
         });
 
         socket.on('broadcastPress', () => {
-            io.sockets.in().emit('arduinoPress');
+            console.log('Gonna broadcast arduino press');
+            socket.broadcast.emit('arduinoPress');
         });
 
         /* Triggered by joining a new room */

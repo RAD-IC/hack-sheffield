@@ -99,6 +99,8 @@ socket.on('pollWait', (data) => {
 
 /* Will only be broadcast to a joined room */
 socket.on('arduinoPress', () => {
+    console.log('Arduino press');
+
     if (scanStatus) {
         console.log('Device successfully connected');
     }
