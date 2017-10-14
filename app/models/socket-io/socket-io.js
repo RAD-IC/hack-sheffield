@@ -9,16 +9,29 @@ exports.start = (server) => {
      * 'connection' messages are issues by front-end socket-io.js via the
      * io.connect() command */
     io.on('connection', function(socket) {
-        /* Triggered by joining a new room */
-        socket.on('join', (roomID) => {
-            socket.room = roomID;
-            socket.join(roomID);
 
-            socket.emit('messages', 'thank you for joining ' + roomID);
+        /*
+         * joinInfo structure:
+          * {
+          * string name;
+          * int id;
+          * }*/
+        socket.on('join', (joinInfo) => {
+            /* TODO: Implement */
+            console.log("New listener joined");
+            socket.emit('joinSuccess');
+        });
+        /* Triggered by joining a new room */
+        socket.on('keyMiss', (flightData) => {
+            /* TODO: Do something with flight data */
+
+            /* Ping server :3003 */
+            io.sockets.emit('pingNotification', flightData);
         });
 
         socket.on('leave', (data) => {
-            socket.leave(data);
+            /* TODO: Implement */
+            //socket.leave(data);
         });
     })
 };

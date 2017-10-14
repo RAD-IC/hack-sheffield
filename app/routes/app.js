@@ -14,7 +14,7 @@ router.post('/googlemaps', function(req, res) {
 /* Creates a new random ID for the given user
  * TODO: Refactor so that roomID is saved to DB
  * TODO: Refactor so that command can be queued seperately as GET and POST requests */
-router.get('/users/roomID', function(req, res) {
+router.get('/post/:ID', function(req, res) {
     console.log('[index.html] : POST request to /users/roomID');
 
     res.send(random.makeID());
