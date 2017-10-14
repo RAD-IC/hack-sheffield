@@ -3,7 +3,7 @@
 #include "includes/include.h"
 #include "serial/serial.h"
 
-#define BUFFER_DATA_SIZE 5
+#define BUFFER_DATA_SIZE 1
 #define C_AUTH 200
 
 /* */
