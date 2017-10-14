@@ -12,20 +12,19 @@ let server = app.listen(app.get('port'), () => {
     console.log('[Server] : open on port ' + app.get('port'));
 });
 
+let ID = 1234;
+
 socket.on('connect', () => {
     console.log('connected!');
 
-    socket.emit('join', {
-        name: 'Arduino',
-        id: 112233,
-    });
+    socket.emit('join');
 });
 
 socket.on('joinSuccess', () => {
     console.log('join ACKed!');
 
-    socket.emit('keyMiss', {
-        flightData: null,
-    });
+    socket.emit('sendID', {ID: ID});
 });
+
+
 module.exports = app;

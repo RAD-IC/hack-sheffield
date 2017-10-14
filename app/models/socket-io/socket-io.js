@@ -1,9 +1,5 @@
-<<<<<<< 0f7db4e60e8a554aa2e6701f9189a9d055e24d15
-let mongooseRoom = require('../mongoose/rooms');
-=======
 let mongooseArduino = require('../mongoose/arduino');
 let randomSHA = require('../vendor/random');
->>>>>>> Add mongo env variables
 const _ = require('underscore');
 
 exports.start = (server) => {
