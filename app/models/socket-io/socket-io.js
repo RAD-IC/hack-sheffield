@@ -75,9 +75,10 @@ exports.start = (server) => {
 
         /* Actually join a room */
         socket.on('joinRoom', (data) => {
-            socket.join(data.ID, () => {
-                socket.emit('joinRoomSuccess');
-            });
+            socket.join(data.ID);
+
+            console.log('Listener joined room: ' + data.ID);
+            socket.emit('joinRoomSuccess');
         });
 
         socket.on('broadcastPress', () => {
