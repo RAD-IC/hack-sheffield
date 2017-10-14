@@ -40,16 +40,50 @@ exports.start = (server) => {
             let savePromise = mongooseArduino.saveArduino(
                 mongooseArduino.createNewArduino(ID)
             );
+
+            let resultJSON = {
+                'status':'success',
+                'ID' : ID,
+            };
+
             savePromise
                 .then(function(success) {
                     console.log('Saved with success.');
-                    socket.emit('IDSave', {'status':'success'});
+                    resultJSON.status = 'success';
+                    socket.emit('IDSave', resultJSON);
                 })
                 .catch(function(err) {
                     console.log('Error occurred while saving to the database. Item already present or key violations');
-                    socket.emit('IDSave', {'status':'failure'});
+                    resultJSON.status = 'failure';
+                    socket.emit('IDSave', resultJSON);
                 });
 
+        });
+
+        socket.on('joinDevice', (data) => {
+            let findPromise = mongooseArduino.find({'id' : data.ID});
+            findPromise
+                .then(function(room) {
+                    console.log('Device ' + data.ID + ' exists in database.');
+                    socket.emit('pollWait', data);
+                })
+                .catch(function(err) {
+                    console.log('Device ' + data.ID + ' does not exist in database.');
+                    socket.emit('joinFailure');
+                });
+        });
+
+        /* Actually join a room */
+        socket.on('joinRoom', (data) => {
+            socket.join(data.ID);
+
+            console.log('Listener joined room: ' + data.ID);
+            socket.emit('joinRoomSuccess');
+        });
+
+        socket.on('broadcastPress', () => {
+            console.log('Gonna broadcast arduino press');
+            socket.broadcast.emit('arduinoPress');
         });
 
         /* Triggered by joining a new room */

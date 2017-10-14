@@ -2,9 +2,6 @@ const express = require('express');
 const notifier = require('node-notifier');
 const path = require('path');
 
-const serverAddr = 'http://localhost:3002';
-const socket = require('socket.io-client')(serverAddr);
-
 /* Defines the application */
 let app = express();
 
@@ -56,6 +53,11 @@ let server = app.listen(app.get('port'), () => {
 });
 
 let SHA1;
+let scanStatus = false;
+
+const io = require('socket.io-client');
+const remoteServer = 'https://sheffield.spina.me';
+const socket = io.connect(remoteServer);
 
 /* */
 socket.on('connect', () => {
@@ -75,6 +77,33 @@ socket.on('joinSuccess', () => {
 socket.on('newSHA', (data) => {
     SHA1 = data.SHA1;
     console.log('SHA1 received ' + SHA1);
+
+    socket.emit('joinDevice', {'ID': 1332221});
+});
+
+/* Call the following to attempt to sync with the arduino device */
+// socket.emit('joinDevice', {'ID': 112233});
+
+socket.on('joinFailure', () => {
+    console.log('No device has been found with the given ID');
+});
+
+socket.on('pollWait', (data) => {
+    console.log('Please press the devices button');
+
+    scanStatus = true;
+
+    /* Join room */
+    socket.emit('joinRoom', data);
+});
+
+/* Will only be broadcast to a joined room */
+socket.on('arduinoPress', () => {
+    console.log('Arduino press');
+
+    if (scanStatus) {
+        console.log('Device successfully connected');
+    }
 });
 
 /* */
