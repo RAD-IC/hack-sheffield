@@ -35,16 +35,6 @@ arduinoDB.once('open', function() {
     console.log('Hackathon DB Active');
 });
 
-/* Load the database address from the config file
- * Removes the double quotation mark using replace function
- */
-/*
-let dbConfig = 'mongodb://' +
-    process.env.DB_USER + ':' +
-    process.env.DB_PASS + '@' +
-    process.env.DB_HOST + ':' +
-    process.env.DB_PORT; */
-
 let arduinoSchema = new Schema({
     id: {
         type: Number,
@@ -54,7 +44,6 @@ let arduinoSchema = new Schema({
 
     device: {
         type: Number,
-        unique: true,
     },
 });
 

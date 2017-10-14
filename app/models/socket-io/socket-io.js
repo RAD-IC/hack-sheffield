@@ -43,10 +43,11 @@ exports.start = (server) => {
             savePromise
                 .then(function(success) {
                     console.log('Saved with success.');
-                    socket.emit('IDReceived');
+                    socket.emit('IDSave', {'status':'success'});
                 })
                 .catch(function(err) {
                     console.log('Error occurred while saving to the database. Item already present or key violations');
+                    socket.emit('IDSave', {'status':'failure'});
                 });
 
         });

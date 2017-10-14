@@ -12,7 +12,7 @@ let server = app.listen(app.get('port'), () => {
     console.log('[Server] : open on port ' + app.get('port'));
 });
 
-let ID = 1234;
+let ID = 1332;
 
 socket.on('connect', () => {
     console.log('connected!');
@@ -24,6 +24,12 @@ socket.on('joinSuccess', () => {
     console.log('join ACKed!');
 
     socket.emit('sendID', {ID: ID});
+});
+
+socket.on('IDSave', (data) => {
+    let status = data.status;
+
+    console.log('Save Status for ID ' + ID + ' ' + status);
 });
 
 
