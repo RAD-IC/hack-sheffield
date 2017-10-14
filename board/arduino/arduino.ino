@@ -9,10 +9,12 @@
 /* General global value definitions */
 #define ARDUINO_ID 201
 #define C_ID 200
-#define BUFFER_DATA_LENGTH 1
+#define BUFFER_DATA_LENGTH 2
 #define BAUDRATE 9600
 #define LED 2
 #define LIGHT_SENSOR A0
+#define TOUCH_SENSOR 3
+#define BUZZER 4
 
 long updateTime = 0;
 
@@ -23,6 +25,8 @@ void setup() {
   Serial.begin(BAUDRATE);
   pinMode(LED, OUTPUT);
   digitalWrite(LED, HIGH);
+  pinMode(TOUCH_SENSOR, INPUT);
+  pinMode(BUZZER, OUTPUT);
 }
 
 /* Main Arduino loop */
@@ -53,11 +57,14 @@ void loop() {
       /* Read the servoAngles */
       Serial.read();
 
-      for (int i = 0; i < BUFFER_DATA_LENGTH; i++) {
-        uint8_t data = (uint8_t) Serial.read();
-
-        // TODO: Do something with data
+      uint8_t data = (uint8_t) Serial.read();
+      if(data == 1) {
+        digitalWrite(BUZZER, HIGH);
+      } else {
+        digitalWrite(BUZZER, LOW);
       }
+      Serial.read();
+        
 
       /* Force a reply */
       writeToSerial = true;      
@@ -73,7 +80,8 @@ void loop() {
     Serial.write(ARDUINO_ID);
 
     //Serial.println(analogRead(LIGHT_SENSOR) > 800);
-    Serial.write(analogRead(LIGHT_SENSOR) > 800 );
+    Serial.write(analogRead(LIGHT_SENSOR) < 800 );
+    Serial.write(digitalRead(TOUCH_SENSOR));
     
   }
 }
