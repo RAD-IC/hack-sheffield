@@ -3,3 +3,6 @@ sheffield
 
 #Ignore node modules
 /**/**/node_modules
+
+#Ignore env variables
+/**/**/.env
