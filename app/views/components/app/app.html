@@ -1,7 +1,19 @@
-<div>
-    Main App view
-</div>
+<style>
+  .loading {
+  }
+</style>
 
-<div>
-    {{variable}}
+<div style="width:100%">
+  <div ng-show="!sentData">
+    <h1 style="text-align: center">Link the Key Dock to your PC</h1>
+    <div ng-if="warning" style="background-color:#f2dede;color:#a94442;border-color:#ebcccc;
+                                min-height: 30px; border: 1px solid; border-radius: 5px; width: 70%; margin:10px auto; padding: 10px;
+                                text-align: center">{{ warningMessage }}</div>
+    <input type="text" name="pincode" style="margin:0 auto; display: block" placeholder="Enter the device pin" ng-model="pincode"></input>
+    <br>
+    <button class="btn" style="margin: 0 auto; display: block" ng-click="sendPin()">Link the device!</button>
+  </div>
+  <div ng-show="sentData">
+    <div class="loading"></div>
+  </div>
 </div>
