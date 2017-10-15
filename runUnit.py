@@ -1,12 +1,16 @@
 import sys
 import subprocess
 
+'''
 execPath = sys.argv[1]
 sketchPath = "board/arduino/arduino.ino"
 
 boardCmd = execPath + " --port  --upload " + sketchPath
 
 subprocess.call(boardCmd, shell=True)
+'''
+
+subprocess.call("cd arduino_daemon && node index.js & cd ..", shell=True)
 
 output = subprocess.check_output("ls /dev | grep cu.usbmodem", shell=True)
 splitOutput = output.split('\n')
