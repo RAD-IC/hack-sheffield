@@ -136,11 +136,7 @@ socket.on('arduinoPress', () => {
 
         exec('../playAudio/audio ../playAudio/ding.wav',
           function (error, stdout, stderr) {
-            console.log('stdout: ' + stdout);
-            console.log('stderr: ' + stderr);
-            if (error !== null) {
-              console.log('exec error: ' + error);
-            }
+            console.log('Audio callback');
         });
     }
 });
