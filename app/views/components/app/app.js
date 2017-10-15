@@ -3,8 +3,10 @@ app.controller('appCtrl', function($scope, $http, $routeParams, $location, socke
     $scope.warning = false;
     $scope.warningMessage = '';
     $scope.pincode = '';
-    $scope.sentData = false;
-    $scope.validData = false;
+
+    $scope.currStatus = 0;
+
+    /* need id input -> 0, checking id -> 1, waiting for btn -> 2, success -> 3 */
     $scope.sendPin = () => {
       let val = $scope.pincode;
       let isnum = /^\d+$/.test(val);
@@ -12,25 +14,27 @@ app.controller('appCtrl', function($scope, $http, $routeParams, $location, socke
         $scope.warning = true;
         $scope.warningMessage = "Invalid Device Number: Device number must only contain numbers.";
       } else {
-        $scope.sentData = true;
+        $scope.currStatus = 1;
         socket.emit('transferID', {hash: $scope.hash, ID: $scope.pincode});
       }
     };
 
     socket.on('joinFailure', () => {
-        $scope.sentData = false;
         $scope.warning = true;
         $scope.warningMessage = "Invalid Device Number: Device is not registered on the system. Please connect the device to the system first.";
         console.log('No device');
+        $scope.currStatus = 0;
 
         /* Handle device not currently waiting on connection */
     });
 
     socket.on('pollWait', (data) => {
+        $scope.currStatus = 2;
         /* Device is on the network, waiting for button presses */
         console.log('Device present, press button');
-
     });
+    
+    /* TODO set statte to 3 when the device button is pressed */
 
     /* Entry remapping */
     let tmp = $routeParams.hash;

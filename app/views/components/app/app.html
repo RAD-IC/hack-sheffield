@@ -39,6 +39,49 @@
             -webkit-transform: scale(1.0);
         }
     }
+
+    .spinner2 {
+        margin: 100px auto 0;
+        width: 70px;
+        text-align: center;
+    }
+
+    .spinner2 > div {
+        width: 18px;
+        height: 18px;
+        background-color: #fff;
+        border-radius: 100%;
+        display: inline-block;
+        -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+        animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+    }
+
+    .spinner2 .bounce1 {
+        background-color: #fff;
+        -webkit-animation-delay: -0.32s;
+        animation-delay: -0.32s;
+    }
+
+    .spinner2 .bounce2 {
+        background-color: #fff;
+        -webkit-animation-delay: -0.16s;
+        animation-delay: -0.16s;
+    }
+
+    @-webkit-keyframes sk-bouncedelay {
+        0%, 80%, 100% { -webkit-transform: scale(0) }
+        40% { -webkit-transform: scale(1.0) }
+    }
+
+    @keyframes sk-bouncedelay {
+        0%, 80%, 100% { 
+          -webkit-transform: scale(0);
+          transform: scale(0);
+        } 40% { 
+          -webkit-transform: scale(1.0);
+          transform: scale(1.0);
+        }
+    }
     html {
         height: 100%;
         background-color: #7f8c8d;
@@ -120,28 +163,45 @@
         border: none;
         border-radius: 0;
     }
+
+    .f-align {
+        vertical-align: middle;
+    }
+
+    .f-space {
+      margin-left: 1em;
+    }
+
 </style>
 
 <div class="outer">
     <div class="inner">
-        <div ng-show="!sentData">
+        <div ng-show="currStatus == 0">
             <div class="title">Link the Key Dock to your PC</div>
             <form ng-submit="sendPin()" class="form-outer">
                 <div ng-show="warning" class="alert alert-danger-flat">
-                    <!--<span class="fa fa-warning fa-2x"></span>-->
-                    <span> {{ warningMessage }}</span></div>
+                    <span class="fa fa-warning fa-2x f-align"></span>
+                    <span class="f-align f-space"> {{ warningMessage }}</span></div>
                 <input type="text" name="pincode" class="simplebox pin-input" placeholder="Enter the device pin" ng-model="pincode"></input>
-                <button type="submit" class="btn btn-link simplebox" ng-click="sendPin()">Link the device!</button>
+                <button type="submit" class="btn btn-link simplebox">Link the device</button>
             </form>
         </div>
-        <div ng-show="sentData && !validData">
+        <div ng-show="currStatus == 1">
+          <div class="spinner2">
+              <div class="bounce1"></div>
+              <div class="bounce2"></div>
+              <div class="bounce3"></div>
+            </div>
+            <div class="title">Please wait. We're connecting to your device.</div>
+        </div>
+        <div ng-show="currStatus == 2">
             <div class="spinner">
                 <div class="double-bounce1"></div>
                 <div class="double-bounce2"></div>
             </div>
-            <div class="title">Please wait. We're connecting to your device.</div>
+            <div class="title">Please press the sync button on the device.</div>
         </div>
-        <div ng-show="sentData && validData">
+        <div ng-show="currStatus == 3">
             <div class="title">Success! Your device is now connected.</div>
         </div>
     </div>
