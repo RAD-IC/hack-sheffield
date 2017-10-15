@@ -64,6 +64,10 @@ exports.start = (server) => {
 
         });
 
+        socket.on('transferID', (data) => {
+            socket.broadcast.emit('readDevice', data);
+        });
+
         socket.on('joinDevice', (data) => {
             let findPromise = mongooseArduino.find({'id' : data.ID});
             findPromise
