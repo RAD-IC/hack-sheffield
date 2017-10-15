@@ -47,6 +47,7 @@ app.controller('appCtrl', function($scope, $http, $routeParams, $location, socke
 
     socket.removeAllListeners('pollWait', function() {
         socket.once('pollWait', pollWait);
+    });
     
     /* TODO set statte to 3 when the device button is pressed */
 
