@@ -89,9 +89,9 @@ exports.start = (server) => {
             socket.emit('joinRoomSuccess');
         });
 
-        socket.on('broadcastPress', () => {
+        socket.on('broadcastPress', (data) => {
             console.log('Gonna broadcast arduino press');
-            socket.broadcast.emit('arduinoPress');
+            io.sockets.in(data.ID).emit('arduinoPress')
         });
 
         /* Triggered by joining a new room */

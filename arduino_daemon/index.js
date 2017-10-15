@@ -17,14 +17,6 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
   extended: true
 }));
 
-app.post('/*', function(req, res) {
-    console.log(req.body);
-
-    /* Broadcast to the room */
-    socket.emit('broadcastPress');
-    return res.status(200).end();
-});
-
 
 const io = require('socket.io-client');
 const remoteServer = 'https://sheffield.spina.me';
@@ -33,6 +25,14 @@ const socket = io.connect(remoteServer);
 // const socket = require('socket.io-client')(serverAddr);
 
 let ID = 12345;
+
+app.post('/*', function(req, res) {
+    console.log(req.body);
+
+    /* Broadcast to the room */
+    socket.emit('broadcastPress', {'ID': ID});
+    return res.status(200).end();
+});
 
 socket.on('connect', () => {
     console.log('connected!');
