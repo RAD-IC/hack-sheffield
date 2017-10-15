@@ -85,7 +85,7 @@ socket.on('joinRoomSuccess', () => {
 
 /* */
 socket.on('readDevice', (data) => {
-    console.log('join Acknowledged with ID ' + data.ID);
+    console.log('join Acknowledged with ID ' + data.ID + ' and SHA1 ' + SHA1);
 
     socket.emit('joinDevice', {'ID': data.ID, 'SHA1' : SHA1});
 });
