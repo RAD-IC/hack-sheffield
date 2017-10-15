@@ -129,8 +129,10 @@ socket.on('arduinoPress', () => {
             wait: true, // Wait with callback, until user action is taken against notification
             open: url,
         }, function (err, response) {
-            // Response is response from notification
+            console.log(err);
+            console.log(response);
         });
+
 
         exec('../playAudio/audio ../playAudio/ding.wav',
           function (error, stdout, stderr) {

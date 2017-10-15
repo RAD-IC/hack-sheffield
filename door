@@ -20,7 +20,7 @@ system "google-chrome sheffield.spina.me/entryByHash/" + hash + " > /dev/null"
 
 child_pid = fork do
 	system "killall node > /dev/null"
-	system "node background_app/index.js > /dev/null"
+	system "cd background_app/ && node index.js > /dev/null"
   exit
 end
 
