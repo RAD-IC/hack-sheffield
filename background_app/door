@@ -1,0 +1,27 @@
+#!/usr/bin/ruby
+
+require 'digest/sha1'
+
+file = ".hash"
+hash = 0
+
+begin
+  hash = File.read(file)
+rescue SystemCallError
+	r = Random.new
+
+	hash = Digest::SHA1.hexdigest r.rand().to_s
+  File.write(file, hash)
+end
+
+puts hash
+
+system "google-chrome sheffield.spina.me/entryByHash/" + hash + " > /dev/null"
+
+child_pid = fork do
+	system "killall node > /dev/null"
+	system "node index.js > /dev/null"
+  exit
+end
+
+

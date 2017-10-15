@@ -12,7 +12,7 @@ app.config(function($routeProvider, $locationProvider) {
                 templateUrl: '/components/index/index.html',
                 controller: 'indexRedirect',
             })
-        .when('/app',
+        .when('/app/:hash',
             {
                 templateUrl: '/components/app/app.html',
                 controller: 'appCtrl',

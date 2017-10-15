@@ -40,31 +40,41 @@ let server = app.listen(app.get('port'), () => {
 
 let SHA1;
 let scanStatus = false;
+let firstJoin = true;
 
 const io = require('socket.io-client');
 const remoteServer = 'https://sheffield.spina.me';
 const socket = io.connect(remoteServer);
 
+fs = require('fs');
+fs.readFile('.hash', 'utf8', function (err,data) {
+    if (err) {
+        return console.log(err);
+    }
+    console.log(data);
+
+    SHA1 = data;
+});
+
 /* */
 socket.on('connect', () => {
     console.log('connected!');
 
-    socket.emit('join');
+    socket.emit('joinRoom', {'ID': SHA1});
+});
+
+socket.on('joinRoomSuccess', () => {
+    if (firstJoin) {
+        socket.emit('join');
+    }
+    firstJoin = false;
 });
 
 /* */
-socket.on('joinSuccess', () => {
-    console.log('join ACKed!');
+socket.on('readDevice', (data) => {
+    console.log('join Acknowledged with ID ' + data.ID);
 
-    socket.emit('getSHA');
-});
-
-/* */
-socket.on('newSHA', (data) => {
-    SHA1 = data.SHA1;
-    console.log('SHA1 received ' + SHA1);
-
-    socket.emit('joinDevice', {'ID': 12345});
+    socket.emit('joinDevice', {'ID': data.ID});
 });
 
 /* Call the following to attempt to sync with the arduino device */
@@ -102,6 +112,11 @@ socket.on('arduinoPress', () => {
             // Response is response from notification
         });
     }
+});
+
+/* */
+socket.on('initAsyncCommunication', () => {
+    console.log('Got async ping');
 });
 
 /* */

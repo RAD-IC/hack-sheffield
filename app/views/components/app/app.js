@@ -1,4 +1,5 @@
-app.controller('appCtrl', function($scope, $http, $routeParams, socket, Data) {
+app.controller('appCtrl', function($scope, $http, $routeParams, $location, socket, Data) {
+    $scope.hash = '';
     $scope.warning = false;
     $scope.warningMessage = '';
     $scope.pincode = '';
@@ -14,6 +15,31 @@ app.controller('appCtrl', function($scope, $http, $routeParams, socket, Data) {
         $scope.warning = true;
         $scope.warningMessage = "Invalid Device Number: Device is not registered on the system. Please connect the device to the system first.";
         $scope.sentData = true;
+
+        socket.emit('transferID', {hash: $scope.hash, ID: $scope.pincode});
       }
+    };
+
+    socket.on('joinFailure', () => {
+        $scope.sentData = false;
+
+        console.log('No device');
+
+        /* Handle device not currently waiting on connection */
+    });
+
+    socket.on('pollWait', (data) => {
+        /* Device is on the network, waiting for button presses */
+        console.log('Device present, press button');
+
+    });
+
+    /* Entry remapping */
+    let tmp = $routeParams.hash;
+
+    if (tmp !== 'home') {
+        $scope.hash = tmp;
+        console.log(tmp);
+        $location.url('/app/home');
     }
 });
