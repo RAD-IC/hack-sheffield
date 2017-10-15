@@ -80,6 +80,9 @@ app.controller('appCtrl', function($scope, $http, $routeParams, $location, socke
             $scope.qrRead = false;
             $scope.currStatus = 1;
             $scope.$apply();
+
+            console.log(data);
+            socket.emit('transferID', {hash: $scope.hash, ID: data});
         }
     }, function(error){
         //show read errors
