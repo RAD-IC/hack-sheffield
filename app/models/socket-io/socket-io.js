@@ -27,13 +27,13 @@ exports.start = (server) => {
             socket.emit('joinSuccess');
         });
 
+        /* TODO: DEPRECATED
         socket.on('getSHA', () => {
-            /* TODO: Implement */
             let sha1 = randomSHA.makeID();
             socket.emit('newSHA', {
                 SHA1: sha1,
             });
-        });
+        }); */
 
         socket.on('sendID', (data) => {
 

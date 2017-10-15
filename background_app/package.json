@@ -9,6 +9,7 @@
   "author": "",
   "dependencies": {
     "express": "^4.16.2",
+    "fs": "0.0.1-security",
     "node-notifier": "^5.1.2",
     "socket.io-client": "^2.0.3"
   }
