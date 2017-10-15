@@ -12,17 +12,15 @@ app.controller('appCtrl', function($scope, $http, $routeParams, $location, socke
         $scope.warning = true;
         $scope.warningMessage = "Invalid Device Number: Device number must only contain numbers.";
       } else {
-        $scope.warning = true;
-        $scope.warningMessage = "Invalid Device Number: Device is not registered on the system. Please connect the device to the system first.";
         $scope.sentData = true;
-
         socket.emit('transferID', {hash: $scope.hash, ID: $scope.pincode});
       }
     };
 
     socket.on('joinFailure', () => {
         $scope.sentData = false;
-
+        $scope.warning = true;
+        $scope.warningMessage = "Invalid Device Number: Device is not registered on the system. Please connect the device to the system first.";
         console.log('No device');
 
         /* Handle device not currently waiting on connection */

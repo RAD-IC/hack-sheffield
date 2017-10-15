@@ -134,14 +134,14 @@
                 <button type="submit" class="btn btn-link simplebox" ng-click="sendPin()">Link the device!</button>
             </form>
         </div>
-        <div ng-show="sentData && validData">
+        <div ng-show="sentData && !validData">
             <div class="spinner">
                 <div class="double-bounce1"></div>
                 <div class="double-bounce2"></div>
             </div>
             <div class="title">Please wait. We're connecting to your device.</div>
         </div>
-        <div ng-show="sentData && !validData">
+        <div ng-show="sentData && validData">
             <div class="title">Success! Your device is now connected.</div>
         </div>
     </div>
