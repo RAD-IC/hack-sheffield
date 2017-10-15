@@ -20,7 +20,7 @@ app.controller('appCtrl', function($scope, $http, $routeParams, $location, socke
       }
     };
 
-    function joinFailure() {
+    const joinFailure = function() {
         socket.on('joinFailure', () => {
             $scope.warning = true;
             $scope.warningMessage = "Invalid Device Number: Device is not registered on the system. Please connect the device to the system first.";
@@ -30,20 +30,20 @@ app.controller('appCtrl', function($scope, $http, $routeParams, $location, socke
 
             /* Handle device not currently waiting on connection */
         });
-    }
+    };
 
     socket.removeAllListeners('joinFailure', function() {
         socket.once('joinFailure', joinFailure);
     });
 
-    function pollWait() {
+    const pollWait= function() {
         socket.on('pollWait', (data) => {
             $scope.currStatus = 2;
             $scope.$apply();
             /* Device is on the network, waiting for button presses */
             console.log('Device present, press button');
         });
-    }
+    };
 
     socket.removeAllListeners('pollWait', function() {
         socket.once('pollWait', pollWait);
