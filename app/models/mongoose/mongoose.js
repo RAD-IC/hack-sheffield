@@ -8,8 +8,8 @@
  *   Promise */
 exports.saveHelper = function(elem) {
     return elem.save(function(err) {
-        if (err) console.log('[Database] save : error');
-        else console.log('[Database] save : success');
+        if (err) console.log('[DBSE] save : error');
+        else console.log('[DBSE] save : success');
     });
 };
 
@@ -20,14 +20,14 @@ exports.saveHelper = function(elem) {
  *   Promise */
 exports.findHelper = function(DB, p) {
     return DB.findOne(p, function(err, obj) {
-        if (err) console.log('[Database] find : error');
+        if (err) console.log('[DBSE] find : error');
         return obj;
     }).then(function(elem) {
         if (!elem) {
-            console.log('[Database] find : error');
-            throw new Error('Error while finding within database. Possibly entry not present.');
+            console.log('[DBSE] find : error');
+            throw new Error('Error while finding within DBSE. Possibly entry not present.');
         } else {
-            console.log('[Database] find : success');
+            console.log('[DBSE] find : success');
             return elem;
         }
     });
@@ -40,14 +40,14 @@ exports.findHelper = function(DB, p) {
  *   Promise */
 exports.findMultipleHelper = function(DB, p) {
     return DB.find(p, function(err, obj) {
-        if (err) console.log('[Database] find : error');
+        if (err) console.log('[DBSE] find : error');
         return obj;
     }).then(function(elems) {
         if (!elems.length) {
-            console.log('[Database] find : error');
+            console.log('[DBSE] find : error');
             throw new Error('Error while finding within database. Possibly entry not present.');
         } else {
-            console.log('[Database] find : success');
+            console.log('[DBSE] find : success');
             return elems;
         }
     });
@@ -60,20 +60,20 @@ exports.findMultipleHelper = function(DB, p) {
  *   Promise */
 exports.removeElem = function(DB, p) {
     return DB.find(p, function(err, obj) {
-        if (err) console.log('[Database] remove : error');
+        if (err) console.log('[DBSE] remove : error');
         return obj;
     }).then(function(elems) {
         if (elems.length) {
             return DB.remove(elems[0], function(err, obj) {
-                if (err) console.log('[Database] remove : error');
+                if (err) console.log('[DBSE] remove : error');
                 else {
-                    console.log('[Database] remove : success');
+                    console.log('[DBSE] remove : success');
                     return obj;
                 }
             }).then();
         } else{
-            console.log('[Database] remove : error');
-            throw new Error('Error while removing from database. Possibly entry not present');
+            console.log('[DBSE] remove : error');
+            throw new Error('Error while removing from DBSE. Possibly entry not present');
         }
     });
 };
@@ -85,21 +85,21 @@ exports.removeElem = function(DB, p) {
  *   Promise */
 exports.removeMultipleHelper = function(DB, p) {
     return DB.find(p, function(err, obj) {
-        if (err) console.log('[Database] remove : error');
+        if (err) console.log('[DBSE] remove : error');
         return obj;
     }).then(function(elems) {
         if (elems.length) {
             for (let i = 0; i < elems.length; i++) {
                 DB.remove(elems[i], function(err, obj) {
-                    if (err) console.log('[Database] remove : error');
+                    if (err) console.log('[DBSE] remove : error');
                     else {
-                        console.log('[Database] remove : success');
+                        console.log('[DBSE] remove : success');
                         return obj;
                     }
                 }).then();
             }
         } else {
-            console.log('[Database] remove : error');
+            console.log('[DBSE] remove : error');
             throw new Error('Error while removing from database. Possibly entry not present');
         }
     });

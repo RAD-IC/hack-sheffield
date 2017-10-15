@@ -45,7 +45,7 @@ app.controller('appCtrl', function($scope, $http, $routeParams, $location, socke
         socket.once('pollWait', pollWait);
     });
 
-    const btnSync = function () {
+    const btnSyncHash = function () {
         console.log('Button has been synched');
 
         $scope.currStatus = 3;
@@ -53,8 +53,8 @@ app.controller('appCtrl', function($scope, $http, $routeParams, $location, socke
         /* */
     };
 
-    socket.removeAllListeners('btnSync', function() {
-        socket.once('btnSync', btnSync);
+    socket.removeAllListeners('btnSyncHash', function() {
+        socket.once('btnSyncHash', btnSyncHash);
     });
 
     /* Entry remapping */
