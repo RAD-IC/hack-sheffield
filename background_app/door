@@ -14,7 +14,7 @@ rescue SystemCallError
   File.write(file, hash)
 end
 
-puts hash
+puts "[HASH] : Add Hash identity: " + hash
 
 system "google-chrome sheffield.spina.me/entryByHash/" + hash + " > /dev/null"
 

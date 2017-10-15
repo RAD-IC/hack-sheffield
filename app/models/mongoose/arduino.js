@@ -32,7 +32,7 @@ let arduinoDB = mongoose.createConnection(dbConfig + arduinoDBName);
 /* Handling connection errors */
 arduinoDB.on('error', console.error.bind(console, 'Cannot connect to hackathonDB:'));
 arduinoDB.once('open', function() {
-    console.log('Hackathon DB Active');
+    console.log('[DBSE] : Hackathon DB Active');
 });
 
 let arduinoSchema = new Schema({

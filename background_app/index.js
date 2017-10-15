@@ -85,7 +85,7 @@ socket.on('joinRoomSuccess', () => {
 
 /* */
 socket.on('readDevice', (data) => {
-    console.log('join Acknowledged with ID ' + data.ID);
+    console.log('join Acknowledged with ID ' + data.ID + ' and SHA1 ' + SHA1);
 
     socket.emit('joinDevice', {'ID': data.ID, 'SHA1' : SHA1});
 });
@@ -100,10 +100,16 @@ socket.on('joinFailure', () => {
 socket.on('pollWait', (data) => {
     console.log('Please press the devices button');
 
-    scanStatus = true;
-
     /* Join room */
     socket.emit('joinRoom', data);
+});
+
+socket.on('btnSync', (data) => {
+    console.log('Button has been synched');
+
+    scanStatus = true;
+
+    socket.emit('btnSwitchLog', {'SHA1' : SHA1});
 });
 
 /* Will only be broadcast to a joined room */
@@ -129,13 +135,14 @@ socket.on('arduinoPress', () => {
 
 /* */
 socket.on('initAsyncCommunication', () => {
-    console.log('Got async ping');
+    console.log('[INIT] : Initialised Communication with Web Browser Application');
 });
 
-/* */
+/* TODO: DEPRECATED
 socket.on('pingNotification', () => {
     console.log('Ping received');
 });
+*/
 
 
 module.exports = app;

@@ -6,7 +6,7 @@
 #include "includes/include.h"
 #include "serial/serial.h"
 
-#define BUFFER_DATA_SIZE 3
+#define BUFFER_DATA_SIZE 4
 #define C_AUTH 200
 
 #define MODEL_NAME 12345678
@@ -75,6 +75,10 @@ int main(int argc, char** argv) {
     bool handleTouched;
     bool knock = false;
     bool knockingEdge = false;
+    bool button = false;
+    bool buttonEdge = false;
+
+    send_post_request(MODEL_NAME, "init");
 
     /* data[2] get 1 when there is a knock */
     while (true) {
@@ -84,12 +88,13 @@ int main(int argc, char** argv) {
             keyInDock = data[0];
             handleTouched = data[1];
             knock = data[2];
+            button = data[3];
             free(data);
         }
 
         uint8_t* buffer = (uint8_t*) malloc (sizeof(uint8_t) * BUFFER_DATA_SIZE);
 
-        buffer[0] = buffer[1] = keyInDock && handleTouched;
+        buffer[0] = keyInDock && handleTouched;
         sendByteData(buffer, getMillis());
         if (knock && !knockingEdge) {
             knockingEdge = true;
@@ -97,6 +102,14 @@ int main(int argc, char** argv) {
         } else {
             if (!knock && knockingEdge) {
                 knockingEdge = false;
+            }
+        }
+        if (button && !buttonEdge) {
+            buttonEdge = true;
+            send_post_request(MODEL_NAME, "button");
+        } else {
+            if(!button && buttonEdge) {
+                buttonEdge = false;
             }
         }
     }

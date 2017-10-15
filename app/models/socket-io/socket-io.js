@@ -23,7 +23,7 @@ exports.start = (server) => {
           * }*/
         socket.on('join', (joinInfo) => {
             /* TODO: Implement */
-            console.log("New listener joined");
+            console.log("[JOIN] : New listener joined");
             socket.emit('joinSuccess');
         });
 
@@ -39,7 +39,7 @@ exports.start = (server) => {
 
             let ID = data.ID;
 
-            console.log('Received ID ' + ID);
+            console.log('[POST] : Post ID : ' + ID);
 
             let savePromise = mongooseArduino.saveArduino(
                 mongooseArduino.createNewArduino(ID)
@@ -52,12 +52,12 @@ exports.start = (server) => {
 
             savePromise
                 .then(function(success) {
-                    console.log('Saved with success.');
+                    console.log('[SAVE] : Saved Arduino Schema successfully');
                     resultJSON.status = 'success';
                     socket.emit('IDSave', resultJSON);
                 })
                 .catch(function(err) {
-                    console.log('Error occurred while saving to the database. Item already present or key violations');
+                    console.log('[ERR] : Error occurred while saving schema to the database. Item already present or key violations');
                     resultJSON.status = 'failure';
                     socket.emit('IDSave', resultJSON);
                 });
@@ -72,11 +72,11 @@ exports.start = (server) => {
             let findPromise = mongooseArduino.find({'id' : data.ID});
             findPromise
                 .then(function(room) {
-                    console.log('Device ' + data.ID + ' exists in database.');
+                    console.log('[FIND] : Arduino Schema found via Primary Key ' + data.ID + ' in database.');
                     io.sockets.in(data.SHA1).emit('pollWait', data);
                 })
                 .catch(function(err) {
-                    console.log('Device ' + data.ID + ' does not exist in database.');
+                    console.log('[ERR] : Arduino Schema with Primary Key ' + data.ID + ' does not exist in database.');
                     io.sockets.in(data.SHA1).emit('joinFailure');
                 });
         });
@@ -85,22 +85,30 @@ exports.start = (server) => {
         socket.on('joinRoom', (data) => {
             socket.join(data.ID);
 
-            console.log('Listener joined room: ' + data.ID);
+            console.log('[JOIN] : New listener joined room with ID ' + data.ID);
             socket.emit('joinRoomSuccess');
         });
 
         socket.on('broadcastPress', (data) => {
-            console.log('Gonna broadcast arduino press ' + data.ID);
-            io.sockets.in(data.ID).emit('arduinoPress')
+            console.log('[EVNT] : Arduino Pressure Sensor (' + data.ID + ')');
+            io.sockets.in(data.ID).emit('arduinoPress');
         });
 
-        /* Triggered by joining a new room */
-        socket.on('keyMiss', (flightData) => {
-            /* TODO: Do something with flight data */
+        socket.on('broadcastButton', (data) => {
+            console.log('[EVNT] : Arduino Button (' + data.ID + ')');
+            io.sockets.in(data.ID).emit('btnSync')
+        });
 
-            /* Ping server :3003 */
+        socket.on('btnSwitchLog', (data) => {
+            console.log('[EVNT] : Arduino Button (' + data.ID + ')');
+            io.sockets.in(data.SHA1).emit('btnSyncHash')
+        });
+
+        /* TODO: Deprecated
+        socket.on('keyMiss', (flightData) => {
             io.sockets.emit('pingNotification', flightData);
         });
+        */
 
         socket.on('leave', (data) => {
             /* TODO: Implement */

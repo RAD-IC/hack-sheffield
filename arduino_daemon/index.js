@@ -17,6 +17,7 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
   extended: true
 }));
 
+let ID;
 
 const io = require('socket.io-client');
 const remoteServer = 'https://sheffield.spina.me';
@@ -24,20 +25,25 @@ const socket = io.connect(remoteServer);
 
 // const socket = require('socket.io-client')(serverAddr);
 
-let ID = 12345;
-
 app.post('/*', function(req, res) {
+
+    let jsonInput = req.body;
     console.log(req.body);
 
     /* Broadcast to the room */
-    socket.emit('broadcastPress', {'ID': ID});
+    if (jsonInput.type === 'knock') {
+        socket.emit('broadcastPress', {'ID': jsonInput.model});
+    } else if (jsonInput.type === 'button') {
+        socket.emit('broadcastButton', {'ID': jsonInput.model});
+    } else if (jsonInput.type === 'init') {
+        ID = jsonInput.model;
+        socket.emit('join');
+    }
     return res.status(200).end();
 });
 
 socket.on('connect', () => {
     console.log('connected!');
-
-    socket.emit('join');
 });
 
 socket.on('joinSuccess', () => {
