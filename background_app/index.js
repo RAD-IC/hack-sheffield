@@ -100,10 +100,14 @@ socket.on('joinFailure', () => {
 socket.on('pollWait', (data) => {
     console.log('Please press the devices button');
 
-    scanStatus = true;
-
     /* Join room */
     socket.emit('joinRoom', data);
+});
+
+socket.on('btnSync', (data) => {
+    console.log('Button has been synched');
+
+    scanStatus = true;
 });
 
 /* Will only be broadcast to a joined room */
@@ -129,13 +133,14 @@ socket.on('arduinoPress', () => {
 
 /* */
 socket.on('initAsyncCommunication', () => {
-    console.log('Got async ping');
+    console.log('[INIT] : Initialised Communication with Web Browser Application');
 });
 
-/* */
+/* TODO: DEPRECATED
 socket.on('pingNotification', () => {
     console.log('Ping received');
 });
+*/
 
 
 module.exports = app;

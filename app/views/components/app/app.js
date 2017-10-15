@@ -44,8 +44,18 @@ app.controller('appCtrl', function($scope, $http, $routeParams, $location, socke
     socket.removeAllListeners('pollWait', function() {
         socket.once('pollWait', pollWait);
     });
-    
-    /* TODO set statte to 3 when the device button is pressed */
+
+    const btnSync = function () {
+        console.log('Button has been synched');
+
+        $scope.currStatus = 3;
+        $scope.$apply();
+        /* */
+    };
+
+    socket.removeAllListeners('btnSync', function() {
+        socket.once('btnSync', btnSync);
+    });
 
     /* Entry remapping */
     let tmp = $routeParams.hash;
