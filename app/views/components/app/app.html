@@ -181,12 +181,13 @@
 
     .camera-modal {
         position: fixed;
-        width: 80%;
-        height: 100%;
-        left: 10%;
-        top: 0;
+        width: 600px;
+        height: 600px;
+        left: calc((100% - 600px) / 2);
+        top: calc((100% - 600px) / 2);
         z-index:1;
         background-color: white;
+        border-radius: 5px;
     }
 
     .camera {
@@ -198,6 +199,8 @@
 
     .close {
         font-size: 25px;
+        right: 5px;
+
     }
 </style>
 
@@ -209,7 +212,7 @@
                 <div ng-show="warning" class="alert alert-danger-flat">
                     <span class="fa fa-warning fa-2x f-align"></span>
                     <span class="f-align f-space"> {{ warningMessage }}</span></div>
-                <input type="text" name="pincode" class="simplebox pin-input" placeholder="Enter the device pin" ng-model="pincode"></input>
+                <input type="text" name="pincode" class="simplebox pin-input" placeholder="Device Pin: 00000000" ng-model="pincode"></input>
                 <button type="submit" class="btn btn-link simplebox">Link the device</button>
                 <div class="center-text">OR</div>
                 <button type="button" class="btn btn-link simplebox" ng-click="openCamera()">Link with QR-Code</button>
@@ -238,7 +241,5 @@
             <div class="close" ng-click="closeCamera()">
                 <i class="fa fa-times" aria-hidden="true"></i>
             </div>
-            <div id="reader" class="camera" style="width: 400px; height: 400px"></div>
+            <div id="reader" class="camera" style="width: 500px; height: 500px"></div>
         </div>
-    </div>
-</div>

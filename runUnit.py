@@ -1,5 +1,6 @@
 import sys
 import subprocess
+import time
 
 '''
 execPath = sys.argv[1]
@@ -29,5 +30,7 @@ arduinoPath = "Arduino/"
 arduinoCmd = "cd " + arduinoPath + \
     " &&  make && ./sheffield /dev/cu.usbmodem" + str(IO) + \
     " " + modelNumber
+
+time.sleep(1)
 
 subprocess.call(arduinoCmd, shell=True)
