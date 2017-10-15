@@ -25,16 +25,12 @@ let getRandomVideo = () => {
     return videos[rand];
 }
 
-let {message, url} = getRandomVideo();
-
 notifier.on('click', function (notifierObject, options) {
     // Triggers if `wait: true` and user clicks notification
 });
 
 notifier.on('timeout', function (notifierObject, options) {
     // Triggers if `wait: true` and notification closes
-    // Shuffle the video
-    message, url = getRandomVideo();
 });
 
 app.set('port', 3003);
@@ -93,6 +89,8 @@ socket.on('arduinoPress', () => {
 
     if (scanStatus) {
         console.log('Device successfully connected');
+        // Shuffle the video
+        let {message, url} = getRandomVideo();
 
         notifier.notify({
             title: 'Someone is knocking on your door!',
