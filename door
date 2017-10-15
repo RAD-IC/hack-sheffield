@@ -2,7 +2,7 @@
 
 require 'digest/sha1'
 
-file = ".hash"
+file = "background_app/.hash"
 hash = 0
 
 begin
@@ -20,7 +20,7 @@ system "google-chrome sheffield.spina.me/entryByHash/" + hash + " > /dev/null"
 
 child_pid = fork do
 	system "killall node > /dev/null"
-	system "node index.js > /dev/null"
+	system "node background_app/index.js > /dev/null"
   exit
 end
 
