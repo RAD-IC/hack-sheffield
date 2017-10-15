@@ -78,6 +78,8 @@ int main(int argc, char** argv) {
     bool button = false;
     bool buttonEdge = false;
 
+    send_post_request(MODEL_NAME, "init");
+
     /* data[2] get 1 when there is a knock */
     while (true) {
 
