@@ -108,6 +108,8 @@ socket.on('btnSync', (data) => {
     console.log('Button has been synched');
 
     scanStatus = true;
+
+    socket.emit('btnSwitchLog', {'SHA1' : SHA1});
 });
 
 /* Will only be broadcast to a joined room */

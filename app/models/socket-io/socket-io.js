@@ -99,6 +99,11 @@ exports.start = (server) => {
             io.sockets.in(data.ID).emit('btnSync')
         });
 
+        socket.on('btnSwitchLog', (data) => {
+            console.log('[EVNT] : Arduino Button (' + data.ID + ')');
+            io.sockets.in(data.SHA1).emit('btnSyncHash')
+        });
+
         /* TODO: Deprecated
         socket.on('keyMiss', (flightData) => {
             io.sockets.emit('pingNotification', flightData);
