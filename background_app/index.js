@@ -87,7 +87,7 @@ socket.on('joinRoomSuccess', () => {
 socket.on('readDevice', (data) => {
     console.log('join Acknowledged with ID ' + data.ID);
 
-    socket.emit('joinDevice', {'ID': data.ID});
+    socket.emit('joinDevice', {'ID': data.ID, 'SHA1' : SHA1});
 });
 
 /* Call the following to attempt to sync with the arduino device */
