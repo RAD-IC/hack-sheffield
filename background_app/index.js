@@ -9,7 +9,7 @@ let app = express();
 const videos = [
     {
         'message': 'Let \'Em In',
-            'url': 'https://youtu.be/re61B8sKQWk?t=32'
+        'url': 'https://youtu.be/re61B8sKQWk?t=32'
     },
     {
         'message': 'I Hear You Knocking',
@@ -113,35 +113,45 @@ socket.on('btnSync', (data) => {
     socket.emit('btnSwitchLog', {'SHA1' : SHA1});
 });
 
+let iHaveMessage = false;
 /* Will only be broadcast to a joined room */
 socket.on('arduinoPress', () => {
     console.log('Arduino press');
 
     if (scanStatus) {
         console.log('Device successfully connected');
-        // Shuffle the video
-        let {message, url} = getRandomVideo();
+        if (!iHaveMessage) {
+            // Shuffle the video
+            iHaveMessage = true;
+            let {message, url} = getRandomVideo();
+            setTimeout(() => {
+                console.log('settimeout for 1s');
+                iHaveMessage = false;
+            }, 1000);
 
-        notifier.notify({
-            title: 'Someone is knocking on your door!',
-            message: message,
-            sound: true, // Only Notification Center or Windows Toasters
-            wait: true, // Wait with callback, until user action is taken against notification
-            open: url,
-        }, function (err, response) {
-            console.log(err);
-            console.log(response);
-        });
+            notifier.notify({
+                title: 'Someone is knocking on your door!',
+                message: message,
+                sound: true, // Only Notification Center or Windows Toasters
+                wait: true, // Wait with callback, until user action is taken against notification
+                open: url,
+            }, function (err, response) {
+                console.log(err);
+                console.log(response);
+            });
 
 
-        exec('../playAudio/audio ../playAudio/ding.wav',
-          function (error, stdout, stderr) {
-            console.log('Audio callback');
-        });
+            exec('../playAudio/audio ../playAudio/ding.wav',
+                function (error, stdout, stderr) {
+                    console.log('Audio callback');
+                });
+        }
+
     }
 });
 
 /* */
+
 socket.on('initAsyncCommunication', () => {
     console.log('[INIT] : Initialised Communication with Web Browser Application');
 });
