@@ -1,18 +1,27 @@
 import sys
-from subprocess import call
+import subprocess
 
 execPath = sys.argv[1]
-port = "dev/cu.usbmodem1421"
 sketchPath = "board/arduino/arduino.ino"
 
-boardCmd = execPath + " --port " + port + " --upload " + sketchPath
+boardCmd = execPath + " --port  --upload " + sketchPath
 
-call(boardCmd, shell=True);
+subprocess.call(boardCmd, shell=True)
+
+output = subprocess.check_output("ls /dev | grep cu.usbmodem", shell=True)
+splitOutput = output.split('\n')
+splitOutput = splitOutput[:-1]
+lowestIO = 5000
+for output in splitOutput:
+    num = int(output[11:])
+    print(num)
+    if(num < lowestIO):
+        lowestIO = num
+
 
 arduinoPath = "Arduino/"
 
-arduinoCmd = "cd " + arduinoPath + " &&  make && ./sheffield"
+arduinoCmd = "cd " + arduinoPath + \
+    " &&  make && ./sheffield /dev/cu.usbmodem" + str(lowestIO)
 
-call(arduinoCmd, shell=True);
-
-
+subprocess.call(arduinoCmd, shell=True)
