@@ -10,6 +10,8 @@ boardCmd = execPath + " --port  --upload " + sketchPath
 subprocess.call(boardCmd, shell=True)
 '''
 
+modelNumber = sys.argv[1]
+
 subprocess.call("cd arduino_daemon && node index.js & cd ..", shell=True)
 
 output = subprocess.check_output("ls /dev | grep cu.usbmodem", shell=True)
@@ -26,6 +28,7 @@ for output in splitOutput:
 arduinoPath = "Arduino/"
 
 arduinoCmd = "cd " + arduinoPath + \
-    " &&  make && ./sheffield /dev/cu.usbmodem" + str(lowestIO)
+    " &&  make && ./sheffield /dev/cu.usbmodem" + str(lowestIO) + \
+    " " + modelNumber
 
 subprocess.call(arduinoCmd, shell=True)
