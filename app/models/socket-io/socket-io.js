@@ -1,10 +1,14 @@
 let mongooseArduino = require('../mongoose/arduino');
 let randomSHA = require('../vendor/random');
+const appRoute = require('../../routes/app.js');
 const _ = require('underscore');
 
 exports.start = (server) => {
     /* Starts socket.io to be listening on the specific server */
     let io = require('socket.io').listen(server);
+
+    /* */
+    appRoute.setup(io);
 
     /* Listens for 'connection' messages
      * 'connection' messages are issues by front-end socket-io.js via the
@@ -23,13 +27,13 @@ exports.start = (server) => {
             socket.emit('joinSuccess');
         });
 
+        /* TODO: DEPRECATED
         socket.on('getSHA', () => {
-            /* TODO: Implement */
             let sha1 = randomSHA.makeID();
             socket.emit('newSHA', {
                 SHA1: sha1,
             });
-        });
+        }); */
 
         socket.on('sendID', (data) => {
 
@@ -60,16 +64,20 @@ exports.start = (server) => {
 
         });
 
+        socket.on('transferID', (data) => {
+            socket.broadcast.emit('readDevice', data);
+        });
+
         socket.on('joinDevice', (data) => {
             let findPromise = mongooseArduino.find({'id' : data.ID});
             findPromise
                 .then(function(room) {
                     console.log('Device ' + data.ID + ' exists in database.');
-                    socket.emit('pollWait', data);
+                    socket.broadcast.emit('pollWait', data);
                 })
                 .catch(function(err) {
                     console.log('Device ' + data.ID + ' does not exist in database.');
-                    socket.emit('joinFailure');
+                    socket.broadcast.emit('joinFailure');
                 });
         });
 
