@@ -1,5 +1,6 @@
 #Executable
 sheffield
+audio
 
 #Ignore node modules
 /**/**/node_modules
