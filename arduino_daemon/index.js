@@ -17,6 +17,7 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
   extended: true
 }));
 
+let ID;
 
 const io = require('socket.io-client');
 const remoteServer = 'https://sheffield.spina.me';
@@ -34,14 +35,15 @@ app.post('/*', function(req, res) {
         socket.emit('broadcastPress', {'ID': jsonInput.model});
     } else if (jsonInput.type === 'button') {
         socket.emit('broadcastButton', {'ID': jsonInput.model});
+    } else if (jsonInput.type === 'init') {
+        ID = jsonInput.model;
+        socket.emit('join');
     }
     return res.status(200).end();
 });
 
 socket.on('connect', () => {
     console.log('connected!');
-
-    socket.emit('join');
 });
 
 socket.on('joinSuccess', () => {
