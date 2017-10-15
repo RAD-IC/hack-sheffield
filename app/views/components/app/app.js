@@ -15,6 +15,7 @@ app.controller('appCtrl', function($scope, $http, $routeParams, $location, socke
         $scope.warningMessage = "Invalid Device Number: Device number must only contain numbers.";
       } else {
         $scope.currStatus = 1;
+        console.log();
         socket.emit('transferID', {hash: $scope.hash, ID: $scope.pincode});
       }
     };
@@ -43,7 +44,7 @@ app.controller('appCtrl', function($scope, $http, $routeParams, $location, socke
 
     if (tmp !== 'home') {
         $scope.hash = tmp;
-        socket.emit('joinRoom', {ID: $scope.hash});
+        //socket.emit('joinRoom', {ID: $scope.hash});
         console.log(tmp);
         $location.url('/app/home');
     }
