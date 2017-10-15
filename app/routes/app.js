@@ -46,7 +46,7 @@ router.get('/entryByHash/:hash', function(req, res) {
 
     io.sockets.in(hash).emit('initAsyncCommunication');
 
-    res.redirect('/app/:hash');
+    res.redirect('/app/' + hash);
 
     /* DEPRECATED */
 });

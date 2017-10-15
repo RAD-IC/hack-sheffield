@@ -1,4 +1,5 @@
-app.controller('appCtrl', function($scope, $http, $routeParams, socket, Data) {
+app.controller('appCtrl', function($scope, $http, $routeParams, $location, socket, Data) {
+    $scope.hash = '';
     $scope.warning = false;
     $scope.warningMessage = '';
     $scope.pincode = '';
@@ -15,5 +16,14 @@ app.controller('appCtrl', function($scope, $http, $routeParams, socket, Data) {
         $scope.warningMessage = "Invalid Device Number: Device is not registered on the system. Please connect the device to the system first.";
         $scope.sentData = true;
       }
+    };
+
+    /* Entry remapping */
+    let tmp = $routeParams.hash;
+
+    if (tmp !== 'home') {
+        $scope.hash = tmp;
+        console.log(tmp);
+        $location.url('/app/home');
     }
 });
