@@ -1,68 +1,148 @@
-<style>
-  .spinner {
+<style type="text/css">
+
+.spinner {
     width: 80px;
     height: 80px;
     position: relative;
-    margin: 100px auto;
-  }
-  
-  .double-bounce1, .double-bounce2 {
+    margin: 0 auto 80px auto;
+}
+
+.double-bounce1, .double-bounce2 {
     width: 100%;
     height: 100%;
     border-radius: 50%;
-    background-color: #333;
+    background-color: #fff;
     opacity: 0.6;
     position: absolute;
     top: 0;
     left: 0;
-    
     -webkit-animation: sk-bounce 2.0s infinite ease-in-out;
     animation: sk-bounce 2.0s infinite ease-in-out;
-  }
-  
-  .double-bounce2 {
+}
+
+.double-bounce2 {
     -webkit-animation-delay: -1.0s;
     animation-delay: -1.0s;
-  }
-  
-  @-webkit-keyframes sk-bounce {
-    0%, 100% { -webkit-transform: scale(0.0) }
-    50% { -webkit-transform: scale(1.0) }
-  }
-  
-  @keyframes sk-bounce {
-    0%, 100% { 
-      transform: scale(0.0);
-      -webkit-transform: scale(0.0);
-    } 50% { 
-      transform: scale(1.0);
-      -webkit-transform: scale(1.0);
-    }
-  }
-</style>
-<div style="width:100%">
-  <div ng-show="!sentData">
-    <h1 style="text-align: center">Link the Key Dock to your PC</h1>
-    <div ng-if="warning" style="background-color:#f2dede;color:#a94442;border-color:#ebcccc;
-                                min-height: 30px; border: 1px solid; border-radius: 5px; width: 70%; margin:10px auto; padding: 10px;
-                                text-align: center">{{ warningMessage }}</div>
-    <form ng-submit="sendPin()">
-      <input type="text" name="pincode" style="margin:30px auto 0 auto; display: block" placeholder="Enter the device pin" ng-model="pincode"></input>
-      <br>
-      <button type="submit" class="btn" style="margin: 0 auto; display: block" ng-click="sendPin()">Link the device!</button>
-    </form>
-  </div>
-  <div ng-show="sentData && !validData" style="position: relative">
-    <div class="spinner">
-        <div class="double-bounce1"></div>
-        <div class="double-bounce2"></div>
-    </div>
-    <h2 style="text-align:center">Please wait. We're connecting to your device.</h2>
-  </div>
+}
 
-  <div ng-show="sentData && validData">
-    <br>
-    <h2 style="text-align:center">Success! Your device is now connected.</h2>
-    <i class="fa fa-check-circle" aria-hidden="true" style="font-size:300px;color:green;width:100%;text-align:center"></i>
-  </div>
+    @-webkit-keyframes sk-bounce {
+        0%, 100% { -webkit-transform: scale(0.0) }
+        50% { -webkit-transform: scale(1.0) }
+    }
+
+    @keyframes sk-bounce {
+        0%, 100% {
+            transform: scale(0.0);
+            -webkit-transform: scale(0.0);
+        } 50% {
+            transform: scale(1.0);
+            -webkit-transform: scale(1.0);
+        }
+    }
+    html {
+        height: 100%;
+        background-color: #7f8c8d;
+    }
+
+    body {
+
+        min-height: 100%;
+        background-color: #7f8c8d;
+    }
+
+    .title {
+        font-size: 3em;
+        color: #FFF;
+        text-align: center;
+    }
+
+    .outer {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+    }
+
+    .inner {
+        position: relative;
+        transform: translateY(-50%);
+        top: 50%;
+    }
+
+    .pin-input {
+        margin: 30px auto;
+        width: 100%;
+        display: block;
+        font-size: 20px;
+        text-align: center;
+        padding: 5px 0;
+        border-radius: 5px;
+        border:none;
+    }
+
+    .btn-link {
+        margin: 30px auto;
+        display: block;
+        background: #a5aeaf;
+        color: #fff;
+        padding: 15px 30px;
+        font-size: 30px;
+        border-radius: 5px;
+        border:none !important;
+    }
+
+    .btn-link:hover, .btn-link:visited, .btn-link:focus {
+        background: #98a3a3;
+        color: #fff;
+        text-decoration: none;
+    }
+
+    .form-outer {
+        margin: 2.5em 20vw;
+    }
+
+    .simplebox {
+        outline: none !important;
+        -webkit-box-shadow: none !important;
+        -moz-box-shadow: none !important;
+        box-shadow: none !important;
+    }
+
+    .tick {
+        font-size:300px;
+        color:green;
+        width:100%;
+        text-align:center
+    }
+
+    .alert-danger-flat {
+        color: #fff;
+        background: #d76860;
+        border: none;
+        border-radius: 0;
+    }
+</style>
+
+<div class="outer">
+    <div class="inner">
+        <div ng-show="!sentData">
+            <div class="title">Link the Key Dock to your PC</div>
+            <form ng-submit="sendPin()" class="form-outer">
+                <div ng-show="warning" class="alert alert-danger-flat">
+                    <!--<span class="fa fa-warning fa-2x"></span>-->
+                    <span> {{ warningMessage }}</span></div>
+                <input type="text" name="pincode" class="simplebox pin-input" placeholder="Enter the device pin" ng-model="pincode"></input>
+                <button type="submit" class="btn btn-link simplebox" ng-click="sendPin()">Link the device!</button>
+            </form>
+        </div>
+        <div ng-show="sentData && validData">
+            <div class="spinner">
+                <div class="double-bounce1"></div>
+                <div class="double-bounce2"></div>
+            </div>
+            <div class="title">Please wait. We're connecting to your device.</div>
+        </div>
+        <div ng-show="sentData && !validData">
+            <div class="title">Success! Your device is now connected.</div>
+        </div>
+    </div>
 </div>
