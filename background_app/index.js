@@ -1,6 +1,7 @@
 const express = require('express');
 const notifier = require('node-notifier');
 const path = require('path');
+const exec = require('child_process').exec;
 
 /* Defines the application */
 let app = express();
@@ -129,6 +130,15 @@ socket.on('arduinoPress', () => {
             open: url,
         }, function (err, response) {
             // Response is response from notification
+        });
+
+        exec('../playAudio/audio ../playAudio/ding.wav',
+          function (error, stdout, stderr) {
+            console.log('stdout: ' + stdout);
+            console.log('stderr: ' + stderr);
+            if (error !== null) {
+              console.log('exec error: ' + error);
+            }
         });
     }
 });

@@ -18,12 +18,19 @@ double getMillis() {
     return time_in_mill;
 }
 
-int main()
+int main(int argc, char** argv)
 {
+    if (argc < 2) {
+        fprintf(stderr, "Please specify path of sound to be played\n");
+        exit(-1);
+    }
+
+    const char* path = argv[1];
+
     double loggedMillis = getMillis();
 
     sf::SoundBuffer buffer;
-    if (!buffer.loadFromFile("ding.wav")) {
+    if (!buffer.loadFromFile(path)) {
         return -1;
     }
 
