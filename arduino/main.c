@@ -9,8 +9,6 @@
 #define BUFFER_DATA_SIZE 4
 #define C_AUTH 200
 
-#define MODEL_NAME 12345678
-
 /* */
 double getMillis() {
 
@@ -61,13 +59,13 @@ void send_post_request(int modelNumber, char *type)
 }
 
 int main(int argc, char** argv) {
-    if (argc < 2) {
+    if (argc < 3) {
         fprintf(stderr, "No device path for aruino selected\n");
         exit(-1);
     }
     /* "/dev/ttyACM0" */
     const char* path = argv[1];
-
+    const int modelNumber = atoi(argv[2]);
     /* Force communication */
     setupSerial(path);
 
@@ -78,7 +76,7 @@ int main(int argc, char** argv) {
     bool button = false;
     bool buttonEdge = false;
 
-    send_post_request(MODEL_NAME, "init");
+    send_post_request(modelNumber, "init");
 
     /* data[2] get 1 when there is a knock */
     while (true) {
@@ -98,7 +96,7 @@ int main(int argc, char** argv) {
         sendByteData(buffer, getMillis());
         if (knock && !knockingEdge) {
             knockingEdge = true;
-            send_post_request(MODEL_NAME, "knock");
+            send_post_request(modelNumber, "knock");
         } else {
             if (!knock && knockingEdge) {
                 knockingEdge = false;
@@ -106,7 +104,7 @@ int main(int argc, char** argv) {
         }
         if (button && !buttonEdge) {
             buttonEdge = true;
-            send_post_request(MODEL_NAME, "button");
+            send_post_request(modelNumber, "button");
         } else {
             if(!button && buttonEdge) {
                 buttonEdge = false;
