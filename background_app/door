@@ -16,7 +16,7 @@ end
 
 puts hash
 
-system "firefox sheffield.spina.me/entryByHash/" + hash + " > /dev/null"
+system "google-chrome sheffield.spina.me/entryByHash/" + hash + " > /dev/null"
 
 child_pid = fork do
 	system "killall node > /dev/null"
