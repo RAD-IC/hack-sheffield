@@ -20,6 +20,20 @@ app.controller('appCtrl', function($scope, $http, $routeParams, $location, socke
       }
     };
 
+    socket.on('joinFailure', () => {
+        $scope.sentData = false;
+
+        console.log('No device');
+
+        /* Handle device not currently waiting on connection */
+    });
+
+    socket.on('pollWait', (data) => {
+        /* Device is on the network, waiting for button presses */
+        console.log('Device present, press button');
+
+    });
+
     /* Entry remapping */
     let tmp = $routeParams.hash;
 
