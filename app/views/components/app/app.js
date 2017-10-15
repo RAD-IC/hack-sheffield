@@ -41,6 +41,7 @@ app.controller('appCtrl', function($scope, $http, $routeParams, $location, socke
 
     if (tmp !== 'home') {
         $scope.hash = tmp;
+        socket.emit('joinRoom', {ID: $scope.hash});
         console.log(tmp);
         $location.url('/app/home');
     }
