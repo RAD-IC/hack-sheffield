@@ -1,19 +1,5 @@
 app.controller('appCtrl', function($scope, $http, $routeParams, $location, socket, Data) {
 
-    let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
-    scanner.addListener('scan', function (content) {
-      console.log(content);
-    });
-    Instascan.Camera.getCameras().then(function (cameras) {
-    if (cameras.length > 0) {
-      scanner.start(cameras[0]);
-    } else {
-      console.error('No cameras found.');
-    }
-    }).catch(function (e) {
-      console.error(e);
-    });
-
     $scope.hash = '';
     $scope.warning = false;
     $scope.warningMessage = '';
@@ -81,4 +67,15 @@ app.controller('appCtrl', function($scope, $http, $routeParams, $location, socke
         console.log(tmp);
         $location.url('/app/home');
     }
+
+    $('#reader').html5_qrcode(function(data){
+            console.log(data);
+        },
+        function(error){
+            //show read errors
+        }, function(videoError){
+            //the video stream could be opened
+        }
+    );
+
 });
