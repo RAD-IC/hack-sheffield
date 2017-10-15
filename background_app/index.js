@@ -8,7 +8,7 @@ let app = express();
 const videos = [
     {
         'message': 'Let \'Em In',
-            'url': 'https://www.youtube.com/watch?v=re61B8sKQWk'
+            'url': 'https://youtu.be/re61B8sKQWk?t=32'
     },
     {
         'message': 'I Hear You Knocking',
@@ -17,7 +17,20 @@ const videos = [
     {
         'message': 'Knockin\' on Heaven\'s Door',
         'url': 'https://www.youtube.com/watch?v=riuV6Ity-Jc&feature=youtu.be&t=51'
+    },
+    {
+        'message': 'Knocking At Your Back Door',
+        'url': 'https://youtu.be/G7GERh0sQzY?t=105'
+    },
+    {
+        'message': 'Knocking at the Door',
+        'url': 'https://youtu.be/vQvp6EghJ18?t=53'
+    },
+    {
+        'message': 'Knock on The Door',
+        'url': 'https://youtu.be/4tbiaGBZ8kY?t=29'
     }
+
 ]
 
 let getRandomVideo = () => {
