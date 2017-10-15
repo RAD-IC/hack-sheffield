@@ -179,6 +179,26 @@
         text-align: center;
     }
 
+    .camera-modal {
+        position: fixed;
+        width: 80%;
+        height: 100%;
+        left: 10%;
+        top: 0;
+        z-index:1;
+        background-color: white;
+    }
+
+    .camera {
+        margin: 0 auto;
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .close {
+        font-size: 25px;
+    }
 </style>
 
 <div class="outer">
@@ -192,9 +212,8 @@
                 <input type="text" name="pincode" class="simplebox pin-input" placeholder="Enter the device pin" ng-model="pincode"></input>
                 <button type="submit" class="btn btn-link simplebox">Link the device</button>
                 <div class="center-text">OR</div>
-                <button class="btn btn-link simplebox">Link with QR-Code</button>
+                <button type="button" class="btn btn-link simplebox" ng-click="openCamera()">Link with QR-Code</button>
             </form>
-            <video id="preview"></video>
         </div>
         <div ng-show="currStatus == 1">
           <div class="spinner2">
@@ -215,7 +234,11 @@
             <div class="title">Success! Your device is now connected.</div>
         </div>
 
-        <div id="reader" style="width:300px;height:250px">
+        <div ng-show="qrRead" class="camera-modal">
+            <div class="close" ng-click="closeCamera()">
+                <i class="fa fa-times" aria-hidden="true"></i>
+            </div>
+            <div id="reader" class="camera" style="width: 400px; height: 400px"></div>
         </div>
     </div>
 </div>

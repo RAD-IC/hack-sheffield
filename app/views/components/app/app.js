@@ -4,21 +4,22 @@ app.controller('appCtrl', function($scope, $http, $routeParams, $location, socke
     $scope.warning = false;
     $scope.warningMessage = '';
     $scope.pincode = '';
+    $scope.qrRead = false;
 
     $scope.currStatus = 0;
 
     /* need id input -> 0, checking id -> 1, waiting for btn -> 2, success -> 3 */
     $scope.sendPin = () => {
-      let val = $scope.pincode;
-      let isnum = /^\d+$/.test(val);
-      if (!isnum) {
-        $scope.warning = true;
-        $scope.warningMessage = "Invalid Device Number: Device number must only contain numbers.";
-      } else {
-        $scope.currStatus = 1;
-        console.log();
-        socket.emit('transferID', {hash: $scope.hash, ID: $scope.pincode});
-      }
+        let val = $scope.pincode;
+        let isnum = /^\d+$/.test(val);
+        if (!isnum) {
+            $scope.warning = true;
+            $scope.warningMessage = "Invalid Device Number: Device number must only contain numbers.";
+        } else {
+            $scope.currStatus = 1;
+            console.log();
+            socket.emit('transferID', {hash: $scope.hash, ID: $scope.pincode});
+        }
     };
 
     const joinFailure = function() {
@@ -68,14 +69,27 @@ app.controller('appCtrl', function($scope, $http, $routeParams, $location, socke
         $location.url('/app/home');
     }
 
+    $scope.openCamera = () => {
+        $scope.qrRead = true;
+    };
+
     $('#reader').html5_qrcode(function(data){
-            console.log(data);
-        },
-        function(error){
-            //show read errors
-        }, function(videoError){
-            //the video stream could be opened
+        console.log(data);
+        if ($scope.qrRead) {
+            $scope.pincode = '';
+            $scope.qrRead = false;
+            $scope.currStatus = 1;
+            $scope.$apply();
         }
-    );
+    }, function(error){
+        //show read errors
+    }, function(videoError){
+        //the video stream could be opened
+    });
+
+
+    $scope.closeCamera = () => {
+        $scope.qrRead = false;
+    };
 
 });
