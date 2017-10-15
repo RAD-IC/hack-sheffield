@@ -90,8 +90,8 @@ exports.start = (server) => {
         });
 
         socket.on('broadcastPress', (data) => {
-            console.log('Gonna broadcast arduino press');
-            io.sockets.in(data.ID).emit('arduinoPress')
+            console.log('Gonna broadcast arduino press ' + data.ID);
+            socket.broadcast.to('room1').emit('arduinoPress')
         });
 
         /* Triggered by joining a new room */
