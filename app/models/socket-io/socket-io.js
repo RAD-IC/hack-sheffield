@@ -1,10 +1,14 @@
 let mongooseArduino = require('../mongoose/arduino');
 let randomSHA = require('../vendor/random');
+const appRoute = require('../../routes/app.js');
 const _ = require('underscore');
 
 exports.start = (server) => {
     /* Starts socket.io to be listening on the specific server */
     let io = require('socket.io').listen(server);
+
+    /* */
+    appRoute.setup(io);
 
     /* Listens for 'connection' messages
      * 'connection' messages are issues by front-end socket-io.js via the

@@ -105,6 +105,11 @@ socket.on('arduinoPress', () => {
 });
 
 /* */
+socket.on('initAsyncCommunication', () => {
+    console.log('Got async ping');
+});
+
+/* */
 socket.on('pingNotification', () => {
     console.log('Ping received');
 });
