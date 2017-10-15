@@ -9,13 +9,14 @@
 /* General global value definitions */
 #define ARDUINO_ID 201
 #define C_ID 200
-#define BUFFER_DATA_LENGTH 3
+#define BUFFER_DATA_LENGTH 4
 #define BAUDRATE 9600
 #define LED_PIN 2
 #define LIGHT_SENSOR_PIN A0
 #define TOUCH_SENSOR_PIN 3
 #define BUZZER_PIN 4
 #define PIEZO_PIN A1
+#define BUTTON_PIN 5
 
 long updateTime = 0;
 
@@ -28,6 +29,7 @@ void setup() {
   digitalWrite(LED_PIN, HIGH);
   pinMode(TOUCH_SENSOR_PIN, INPUT);
   pinMode(BUZZER_PIN, OUTPUT);
+  pinMode(BUTTON_PIN, INPUT);
 }
 
 /* Main Arduino loop */
@@ -83,6 +85,7 @@ void loop() {
     Serial.write(analogRead(LIGHT_SENSOR_PIN) < 800 );
     Serial.write(digitalRead(TOUCH_SENSOR_PIN));
     Serial.write(analogRead(PIEZO_PIN) > 600);
+    Serial.write(digitalRead(BUTTON_PIN));
     
   }
 }
