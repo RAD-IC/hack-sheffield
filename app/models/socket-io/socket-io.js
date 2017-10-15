@@ -73,11 +73,11 @@ exports.start = (server) => {
             findPromise
                 .then(function(room) {
                     console.log('Device ' + data.ID + ' exists in database.');
-                    socket.broadcast.emit('pollWait', data);
+                    io.sockets.in(data.SHA1).emit('pollWait', data);
                 })
                 .catch(function(err) {
                     console.log('Device ' + data.ID + ' does not exist in database.');
-                    socket.broadcast.emit('joinFailure');
+                    io.sockets.in(data.SHA1).emit('joinFailure');
                 });
         });
 
