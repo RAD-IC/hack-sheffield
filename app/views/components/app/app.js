@@ -24,12 +24,14 @@ app.controller('appCtrl', function($scope, $http, $routeParams, $location, socke
         $scope.warningMessage = "Invalid Device Number: Device is not registered on the system. Please connect the device to the system first.";
         console.log('No device');
         $scope.currStatus = 0;
+        $scope.$apply();
 
         /* Handle device not currently waiting on connection */
     });
 
     socket.on('pollWait', (data) => {
         $scope.currStatus = 2;
+        $scope.$apply();
         /* Device is on the network, waiting for button presses */
         console.log('Device present, press button');
     });
