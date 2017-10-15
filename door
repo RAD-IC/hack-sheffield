@@ -16,12 +16,8 @@ end
 
 puts "[HASH] : Add Hash identity: " + hash
 
-system "google-chrome sheffield.spina.me/entryByHash/" + hash + " > /dev/null"
+system "open http://sheffield.spina.me/entryByHash/" + hash + " > /dev/null"
 
-child_pid = fork do
-	system "killall node > /dev/null"
-	system "cd background_app/ && node index.js > /dev/null"
-  exit
-end
+system "cd background_app/ && node index.js"
 
 

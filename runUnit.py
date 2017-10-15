@@ -31,6 +31,6 @@ arduinoCmd = "cd " + arduinoPath + \
     " &&  make && ./sheffield /dev/cu.usbmodem" + str(IO) + \
     " " + modelNumber
 
-time.sleep(1)
+time.sleep(10)
 
 subprocess.call(arduinoCmd, shell=True)
