@@ -6,7 +6,7 @@ const mongooseRoom = require('../models/mongoose/arduino');
 
 let io;
 
-exports.setup = (ioInj) => {
+router.setup = (ioInj) => {
     io = ioInj;
 };
 
