@@ -3,5 +3,6 @@ app.controller('indexRedirect', function($http, $location, $scope) {
 
     $scope.foo = 'noice';
 
-    $location.url('/app');
+    /* Def routing */
+    $location.url('/app/home');
 });
